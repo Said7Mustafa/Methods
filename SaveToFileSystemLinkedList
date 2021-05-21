@@ -1,0 +1,55 @@
+package Additional_methods;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import BackEnd.ancestryTree;
+
+public class FileSystem {
+	// copy the path if tree.ser and paste it in path var 
+	String path  = "C:........\\name.ser"; // enter the path here
+	
+  /*
+  will serialize the linkedlist and easily retriveable, delete the file if you want to reset the file or rename the file.
+  make sure to add the path.
+  
+  do this 
+  1) serialize the node and linkedlist files 
+  2) to update, first deserialize the file and store it in a linkedlist then insert or remove data then serialize it again to save it 
+  
+  */
+  
+  //takes the linkedlist and serializes it then save to the file 
+	public void serializeTree(linkedlist e) {
+		try {
+            FileOutputStream fileOut = new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(e);
+            out.close();
+            fileOut.close();
+            System.out.println("Serialized data is saved ");
+         } catch (IOException i) {
+            i.printStackTrace();
+         }
+	}
+	public linkedlist DeserializeTree() throws IOException {
+		linkedlist tree = null;
+	      try {
+	         FileInputStream fileIn = new FileInputStream(path);
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         tree = (linkedlist) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	      } catch (ClassNotFoundException c) {
+	         System.out.println("Employee class not found");
+	         c.printStackTrace();
+	         
+	      }    
+	      return tree;
+	}
+}
